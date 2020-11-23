@@ -1,0 +1,5 @@
+const env = {
+  bearer: 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjODNiYTRkMDU4YmY5NmZiYzhhZWUzYzY1NDBiMzIyNSIsInN1YiI6IjVmYmFkOGQxMDc5MmUxMDAzZDNhM2U2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.alonWZIncHjg2Lhg954pn_aQFWls773qfhz2c8SrKmw'
+}
+
+export default env;
