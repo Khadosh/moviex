@@ -24,14 +24,16 @@ export interface MovieType {
 interface MovieState {
   movieList: MovieType[];
   filter: number;
+  fetching: boolean;
 }
 
 const initialState: MovieState = {
   movieList: [],
-  filter: 0
+  filter: 0,
+  fetching: true
 };
 
-export const counterSlice = createSlice({
+export const movieSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
@@ -40,18 +42,30 @@ export const counterSlice = createSlice({
     },
     setFilter: function(state, action: PayloadAction<number>) {
       state.filter = action.payload
+    },
+    setFetching: function(state, action: PayloadAction<boolean>) {
+      state.fetching = action.payload
     }
   },
 });
 
-export const { setMovies } = counterSlice.actions;
+export const { setMovies, setFilter, setFetching } = movieSlice.actions;
 
 export const selectMovies = ({movies: { movieList, filter}}: RootState) =>
   movieList
-    .filter(movie => movie.vote_average >= filter)
+    .filter(movie => {
+      const max = filter * 2;
+      const min = max - 2;
+      return !filter || (movie.vote_average >= min && movie.vote_average < max);
+    })
     .filter(movie => !!movie.poster_path);
 
+export const selectFilter = ({movies: { filter }}: RootState) => filter;
+export const selectFetching = ({movies: { fetching }}: RootState) => fetching;
+
 export const fetchMovies = (query?: string): AppThunk => async dispatch => {
+  dispatch(setFetching(true)); 
+
   const attrs = {
     language: 'en-US',
     include_adult: false,
@@ -70,6 +84,7 @@ export const fetchMovies = (query?: string): AppThunk => async dispatch => {
   }).then(response => response.json())
 
   dispatch(setMovies(result.results));  
+  dispatch(setFetching(false)); 
 };
 
-export default counterSlice.reducer;
+export default movieSlice.reducer;

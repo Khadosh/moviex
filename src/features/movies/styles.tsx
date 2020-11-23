@@ -4,15 +4,20 @@ type bgProps = {
   bg: any;
 }
 
+type marginProps = {
+  ml?: string;
+}
+
 export const Header = styled.header`
   height: 10rem;
   background-color: black;
   margin-bottom: 2rem;
+  padding: 0 1rem;
 `
 export const Form = styled.form`
   max-width: 30rem;
   margin: 0 auto;
-  padding: 4rem 0;
+  padding: 4rem 0 0;
   display: flex;
   flex-direction: column;
 `;
@@ -31,9 +36,26 @@ export const SearchBar = styled.input`
   background-repeat: no-repeat;
 `;
 
-export const SearchButton = styled.button`
-
+export const FilterRanking = styled.div`
+  flex: 1;
+  display: flex;
+  max-width: 30rem;
+  margin: 0 auto;
+  color: white;
 `;
+
+export const StarButton = styled.button`
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  color: white;
+  &:hover { 
+    opacity: 0.9;
+    cursor: pointer;
+  }
+  outline: none;
+  margin-left: ${(props: marginProps) => props.ml || 0}
+`
 
 export const MovieList = styled.div`
   display: flex;
